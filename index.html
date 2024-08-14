@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: yellow;
+        }
+        #app {
+            background-image: url("images.jpeg");
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50vh;
+            height: 50vh;
+
+        }
+        h1 {
+            margin-top: 0;
+            color: #ddd;
+        }
+        input[type="text"] {
+            width: calc(100% - 42px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            margin-left: 125px;
+            padding: 10px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        li span {
+            flex-grow: 1;
+        }
+        li button {
+            background: blue;
+            padding: 5px 10px;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        li .edit-button {
+            background: #ffc107; /* Different color for edit button */
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Enter a new task">
+        <button onclick="addTask()">Add</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+            const taskText = taskInput.value;
+
+            if (taskText === '') {
+                alert('Please enter at least one task');
+                return;
+            }
+
+            if (taskText !== '') {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>${taskText}</span>
+                    <button class="edit-button" onclick="editTask(this)">Edit</button>
+                    <button onclick="removeTask(this)">Remove</button>
+                `;
+                taskList.appendChild(listItem);
+                taskInput.value = '';
+            }
+
+  
+        function removeTask(button) {
+            const listItem = button.parentElement;
+            listItem.remove();
+        }
+
+        function editTask(button) {
+            const listItem = button.parentElement;
+            const taskSpan = listItem.querySelector('span');
+            const taskText = taskSpan.innerText;
+            const newTaskText = prompt('Edit task:', taskText);
+            if (newTaskText !== null && newTaskText.trim() !== '') {
+                taskSpan.innerText = newTaskText.trim();
+            }
+        }
+    </script>
+</body>
+</html>
